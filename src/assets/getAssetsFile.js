@@ -4,3 +4,4 @@ const getAssetsFile = (name) =>{
 }
 
 export default getAssetsFile
+
