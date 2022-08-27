@@ -2,12 +2,12 @@
   <div style="display: flex;align-items: center">
     <div class="category" :style="{height: computedHeight+'px'}">
       <div class="category-for-flex" ref="categoryForFlex">
-        <img v-for="(item, index) in items" :src="item.pic" :alt="item.name" @click="changeDisplay(index)"
+        <img v-for="(item, index) in items" :src="getUrl(item.pic)" :alt="item.name" @click="changeDisplay(index)"
              :class="['category-for-flex-element', {'on-display': index === onDisplayIndex, 'main-img-changing': isMainImgChanging}]">
       </div>
     </div>
     <div class="main" :style="{height: computedHeight+'px'}">
-      <img :src="items[onDisplayIndex].pic" :alt="items[onDisplayIndex].name" ref="mainImg"
+      <img :src="getUrl(items[onDisplayIndex].pic)" :alt="items[onDisplayIndex].name" ref="mainImg"
            :class="{'main-img-changing': isMainImgChanging}">
       <p :class="['main-name', {'main-img-changing': isMainNameChanging}]">{{ items[onDisplayIndex].name }}</p>
       <p :class="['main-desc', {'main-img-changing': isMainDescChanging}]">{{ items[onDisplayIndex].desc }}</p>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import getAssetsFile from "../../../assets/getAssetsFile.js";
 export default {
   name: "Slides",
   data() {
@@ -26,25 +27,25 @@ export default {
       items: [
         {
           name: 'Definitive Future',
-          pic: './1-2.jpg',
+          pic: '1-2.jpg',
           desc: 'Available on my mind'
         },
         {
           name: 'bbb',
-          pic: './2-2.png',
+          pic: '2-2.png',
           desc: 'sadf'
         }, {
           name: 'ccc',
-          pic: './3-2.png',
+          pic: '3-2.png',
           desc: 'qwbsbqe'
         }, {
           name: 'aaa',
-          pic: './1-2.jpg',
+          pic: '1-2.jpg',
           desc: 'caxgaewg'
         },
         {
           name: 'bbb',
-          pic: './2-2.png',
+          pic: '2-2.png',
           desc: 'wqg gwqwrg'
         },
       ],
@@ -89,6 +90,9 @@ export default {
       setTimeout(function () {
         _this.isMainDescChanging = false
       }, 400)
+    },
+    getUrl(name){
+      return getAssetsFile(name)
     }
   },
   mounted() {

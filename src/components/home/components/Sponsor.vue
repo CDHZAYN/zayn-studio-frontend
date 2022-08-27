@@ -2,7 +2,7 @@
   <span class="title">{{ title }}</span>
   <div class="main">
     <div v-for="item in items" class="item">
-      <div class="avatar" :style="{'background-image': `url(${item.avatar})`}"></div>
+      <div class="avatar" :style="{'background-image': 'url('+getUrl(item.avatar)+')'}"></div>
       <div style="display: flex;flex-direction: column">
         <span class="name">{{ item.name }}</span>
         <span class="desc">{{ item.desc }}</span>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import getAssetsFile from "../../../assets/getAssetsFile.js";
 export default {
   name: "Sponsor",
   props: {
@@ -24,36 +25,42 @@ export default {
         {
           name: "littleBlack",
           desc: "\"都jb兄弟\"",
-          avatar: '/zth.jpg',
+          avatar: 'zth.jpg',
           src: 'littleblack.cc'
         },
         {
           name: "ZY",
           desc: "miku fan~",
-          avatar: '/studio.png',
+          avatar: 'studio.png',
           src: 'zyinnju.com'
         },
         {
           name: "littleBlack",
           desc: "\"都jb兄弟\"",
-          avatar: '/zth.jpg',
+          avatar: 'zth.jpg',
           src: 'littleblack.cc'
         },
         {
           name: "littleBlack",
           desc: "\"都jb兄弟\"",
-          avatar: '/zth.jpg',
+          avatar: 'zth.jpg',
           src: 'littleblack.cc'
         },
         {
           name: "ZY",
           desc: "miku fan~",
-          avatar: '/studio.png',
+          avatar: 'studio.png',
           src: 'zyinnju.com'
         }
-      ]
+      ],
+      backgroundImage: this.getUrl()
     }
   },
+  methods:{
+    getUrl(name){
+      return getAssetsFile(name);
+    }
+  }
 }
 </script>
 
