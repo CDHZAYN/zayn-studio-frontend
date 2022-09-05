@@ -1,12 +1,15 @@
 <template>
-<div class="color">
+<div class="color" :style="{'background-color': color}">
   <p>Powered By Vite&Vue | Created By CDH2AYN</p>
 </div>
 </template>
 
 <script>
 export default {
-  name: "Bottom"
+  name: "Bottom",
+  props:{
+    color: String
+  }
 }
 </script>
 
@@ -14,7 +17,8 @@ export default {
 .color{
   width: 100%;
   height: 15vh;
-  background-color: rgb(255, 202, 2);
+  /*background-color: rgb(255, 202, 2);*/
+  transition: all 0.3s linear;
 }
 
 .color p{

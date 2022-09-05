@@ -1,6 +1,6 @@
 <template>
-  <div class="background">
-    <router-link v-for="item in items" :to="item.url" v-slot="{navigate}">
+  <div class="background" :style="{'background-color': color}">
+    <router-link v-for="item in routes" :to="item.path" @click="$emit('color', item.color)">
       {{ item.name }}
     </router-link>
     <img src="/studio.png" class="icon" alt="icon">
@@ -10,42 +10,31 @@
 <script>
 export default {
   name: "NavBar",
+  props:{
+    color: String,
+    routes: Array
+  },
   data() {
     return {
-      items: [
-        {
-          name: 'HOME',
-          url: '/'
-        },
-        {
-          name: 'GAMES',
-          url: '/games'
-        },
-        {
-          name: 'FORUM',
-          url: '/forum'
-        },
-        {
-          name: 'BLOG',
-          url: '/blog'
-        }
-      ]
     }
+  },
+  mounted() {
   }
 }
 </script>
 
 <style scoped>
 .background {
-  background-color: #FFCA02;
+  /*background-color: #FFCA02;*/
   /*background-color: black;*/
   padding: 3vh 0 3vh 0;
+  transition: all 0.3s linear;
 }
 
 .background .icon {
   position: absolute;
-  height: 10vh;
-  top: 0;
+  height: 8vh;
+  top: 1vh;
   left: 50vw;
   transform: translate(-50%, 0);
 }
