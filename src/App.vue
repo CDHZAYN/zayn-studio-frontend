@@ -1,10 +1,12 @@
 <template>
-  <nav-bar @color="changeColor" :color="nowColor" :routes="this.routes"/>
+  <nav-bar @color="changeColor" :color="nowColor" :routes="routes"/>
   <router-view/>
   <Bottom :color="nowColor"></Bottom>
 </template>
 
 <script>
+import index from './network/routes.js'
+
 import Slides from "./components/home/components/Slides.vue";
 import NavBar from "./components/NavBar.vue";
 import Bottom from "./components/Bottom.vue";
@@ -14,28 +16,7 @@ export default {
   data() {
     return {
       nowColor: '#FFCA02',
-      routes: [
-        {
-          name: 'HOME',
-          path: '/',
-          color: '#FFCA02'
-        },
-        {
-          name: 'GAMES',
-          path: '/games',
-          color: '#E83A37'
-        },
-        {
-          name: 'FORUM',
-          path: '/forum',
-          color: '#66CC33'
-        },
-        {
-          name: 'BLOG',
-          path: '/blog',
-          color: '#0E619E'
-        }
-      ]
+      routes: index
     }
   },
   methods: {

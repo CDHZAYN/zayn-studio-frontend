@@ -6,22 +6,29 @@ import Home from "../components/home/Home.vue";
 
 export default [
     {
+        path: '/',
+        redirect: '/home'
+    },
+    {
         name: 'home',
-        path: '',
+        path: '/home',
         component: Home,
-        alias: ['/home']
-    },{
+        color: '#FFCA02'
+    }, {
         name: 'games',
         path: '/games',
-        component: Games
+        component: Games,
+        color: '#E83A37'
     },
     {
         name: 'forum',
         path: '/forum',
-        component: Forum
-    },{
+        component: Forum,
+        color: '#66CC33'
+    }, {
         name: 'blog',
         path: '/blog',
-        component: Blog
+        component: Blog,
+        color: '#0E619E'
     }
 ]
