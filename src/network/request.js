@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const request = axios.create({
-    baseURL: '',
+    baseURL: import.meta.env.VITE_BACKEND_URL,
     timeout: 10000,
     auth: {
         username: 'user',
@@ -17,6 +17,8 @@ const request = axios.create({
     //     }
     // },
 })
+
+console.log(import.meta.env.VITE_BACKEND_URL)
 
 request.interceptors.request.use(
     function (config) {

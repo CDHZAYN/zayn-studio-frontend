@@ -13,8 +13,7 @@ export default {
     }
   },
   mounted() {
-    console.log(import.meta.env)
-    this.$request.get('api/test',
+    this.$request.get('/test',
         {
           params: {
             id: 1431,
