@@ -13,7 +13,8 @@ export default {
     }
   },
   mounted() {
-    this.$axios.get('api/test',
+    console.log(import.meta.env)
+    this.$request.get('api/test',
         {
           params: {
             id: 1431,
