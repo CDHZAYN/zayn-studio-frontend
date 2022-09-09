@@ -19,7 +19,8 @@ export default {
             id: 1431,
           }
         }).then((response) => {
-      console.log(response.request.response);
+          this.test=response.request.response
+      console.log(response.request.config);
     });
   }
 }
