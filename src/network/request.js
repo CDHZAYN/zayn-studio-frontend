@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const request = axios.create({
-    baseURL: import.meta.env.VITE_BACKEND_URL,
-    timeout: 10000,
+    baseURL: '/api',
+    timeout: 6600,
     auth: {
         username: 'user',
         password: 'd08adba1-3041-462e-986c-ed8e464e43d5'
