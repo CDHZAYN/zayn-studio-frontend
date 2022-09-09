@@ -5,7 +5,7 @@ const request = axios.create({
     timeout: 10000,
     auth: {
         username: 'user',
-        password: '7e2bff04-3e80-42c0-b24d-8a2b912016aa'
+        password: 'd08adba1-3041-462e-986c-ed8e464e43d5'
     },
     // proxy: {
     //     protocol: 'http',
