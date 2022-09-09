@@ -7,15 +7,15 @@ const request = axios.create({
         username: 'user',
         password: '7e2bff04-3e80-42c0-b24d-8a2b912016aa'
     },
-    proxy: {
-        protocol: 'http',
-        host: 'localhost',
-        port: 8080,
-        auth: {
-            username: 'user',
-            password: '7e2bff04-3e80-42c0-b24d-8a2b912016aa'
-        }
-    },
+    // proxy: {
+    //     protocol: 'http',
+    //     host: 'localhost',
+    //     port: 8080,
+    //     auth: {
+    //         username: 'user',
+    //         password: '7e2bff04-3e80-42c0-b24d-8a2b912016aa'
+    //     }
+    // },
 })
 
 request.interceptors.request.use(
