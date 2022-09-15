@@ -33,10 +33,11 @@ export default {
 
 .background .icon {
   position: absolute;
-  height: 8vh;
-  top: 1vh;
+  height: 60px;
+  object-fit: cover;
+  top: 0;
   left: 50vw;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, 10%);
 }
 
 a {

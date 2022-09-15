@@ -1,29 +1,52 @@
 <template>
-  <div style="display: flex;align-items: center">
-    <div class="category" :style="{height: computedHeight+'px'}">
-      <div class="category-for-flex" ref="categoryForFlex">
-        <img v-for="(item, index) in items" :src="getUrl(item.pic)" :alt="item.name" @click="changeDisplay(index)"
-             :class="['category-for-flex-element', {'on-display': index === onDisplayIndex, 'main-img-changing': isMainImgChanging}]">
+  <div style="display: flex;">
+    <div style="width: 20vw; height: 25.714vw; position: relative;">
+      <div class="switch" @mouseenter="isBackHover = true" @mouseleave="isBackHover = false"
+           @click="changeDisplay(this.onDisplayIndex-1)" style="right: 10%;top: 70%;">
+          <img src="/arrow.png" alt="back" class="switch-arrow" v-if="!isBackHover"/>
+          <img src="/studio.png" alt="back" class="switch-arrow" v-else/>
+        <div class="switch-scroll">
+          <Transition mode="out-in">
+            <h6 class="switch-title" v-if="!isBackHover" key="q1">BACK</h6>
+            <h6 :class="['switch-title', {'switch-title-on-hover': isBackHover}]" v-else key="q2">
+              {{ items[onDisplayIndex - 1 < 0 ? items.length - 1 : onDisplayIndex - 1].name }}</h6>
+          </Transition>
+        </div>
       </div>
+      <button style="margin-top: 100px;" @click="isBackHover=!isBackHover">切换</button>
     </div>
-    <div class="main" :style="{height: computedHeight+'px'}">
-      <img :src="getUrl(items[onDisplayIndex].pic)" :alt="items[onDisplayIndex].name" ref="mainImg"
+    <div class="main">
+      <img :src="getUrl(items[onDisplayIndex].pic)" :alt="items[onDisplayIndex].name"
            :class="{'main-img-changing': isMainImgChanging}">
       <p :class="['main-name', {'main-img-changing': isMainNameChanging}]">{{ items[onDisplayIndex].name }}</p>
       <p :class="['main-desc', {'main-img-changing': isMainDescChanging}]">{{ items[onDisplayIndex].desc }}</p>
     </div>
-    <div class="label" :style="{height: computedHeight+'px'}">
+    <div style="width: 20vw; height: 25.714vw; position: relative;">
+      <div class="switch" @mouseenter="isNextHover = true" @mouseleave="isNextHover = false"
+           @click="changeDisplay(this.onDisplayIndex+1)" style="left: 10%;top: 70%;">
+        <div class="switch-scroll">
+            <h6 class="switch-title" v-if="!isNextHover" style="direction: rtl;">NEXT</h6>
+            <h6 :class="['switch-title',{'switch-title-on-hover': isNextHover}]" style="direction: rtl;" v-else>
+              {{ items[onDisplayIndex + 1 > items.length - 1 ? 0 : onDisplayIndex + 1].name }}</h6>
+        </div>
+          <img src="/arrow.png" alt="back" class="switch-arrow" v-if="!isNextHover"
+               style="transform: rotate(180deg) translateY(-3px)">
+          <img src="/studio.png" alt="default" class="switch-arrow" v-else>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import getAssetsFile from "../../../assets/getAssetsFile.js";
+
 export default {
   name: "Slides",
   data() {
     return {
       onDisplayIndex: 2,
+      isBackHover: false,
+      isNextHover: false,
       items: [
         {
           name: 'Definitive Future',
@@ -49,8 +72,6 @@ export default {
           desc: 'wqg gwqwrg'
         },
       ],
-      computedHeight: 0,
-      categoryDiff: 0,
       isMainImgChanging: false,
       isMainNameChanging: false,
       isMainDescChanging: false,
@@ -67,21 +88,22 @@ export default {
   },
   methods: {
     changeDisplay(newIndex) {
-      if (newIndex === this.onDisplayIndex) return;
+      if (newIndex === this.onDisplayIndex) return
+      if (this.isMainDescChanging) return
+      // console.log(this.isMainDescChanging)
       this.isMainImgChanging = true
       this.isMainNameChanging = true
       this.isMainDescChanging = true
-
-      let categoryForFlex = this.$refs.categoryForFlex
-      let oldTransform = document.defaultView.getComputedStyle(categoryForFlex).transform
-      let diffTime = this.onDisplayIndex - newIndex
-      oldTransform = oldTransform === 'none' ? 0 : oldTransform.split(',')[5];
-      oldTransform = oldTransform === 0 ? 0 : parseFloat(oldTransform.substring(0, oldTransform.length - 1))
-      categoryForFlex.style.transform = "translateY(" + (this.categoryDiff * diffTime + oldTransform) + "px)"
+      // console.log(this.isMainDescChanging)
 
       let _this = this
       setTimeout(function () {
-        _this.onDisplayIndex = newIndex
+        if (newIndex < 0)
+          _this.onDisplayIndex = _this.items.length - 1;
+        else if (newIndex > _this.items.length - 1)
+          _this.onDisplayIndex = 0;
+        else
+          _this.onDisplayIndex = newIndex
         _this.isMainImgChanging = false
       }, 300)
       setTimeout(function () {
@@ -91,82 +113,97 @@ export default {
         _this.isMainDescChanging = false
       }, 400)
     },
-    getUrl(name){
+    getUrl(name) {
       return getAssetsFile(name)
     }
   },
   mounted() {
-    this.computedHeight = document.body.offsetWidth * 9 / 35
-    this.categoryDiff = (this.computedHeight - document.body.offsetWidth * 3 / 14) / 4 + document.body.offsetWidth * 3 / 70
-    this.changeDisplay(0)
-    window.onresize = () => {
-      return (() => {
-        this.$nextTick(() => {
-          this.computedHeight = document.body.offsetWidth * 9 / 35
-          this.categoryDiff = (this.computedHeight - document.body.offsetWidth * 3 / 14) / 4 + document.body.offsetWidth * 3 / 70
-          let node = this.$refs.categoryForFlex
-          node.style.transform = "translateY(" + (this.categoryDiff * (2 - this.onDisplayIndex)) + "px)"
-        });
-      })();
-    }
     let _this = this
     this.switchTimer = setInterval(function () {
       if (!_this.isMainDescChanging)
         _this.switchTimer += 1
-    }, 1000)
+    }, 2000)
   },
 }
 </script>
 
 <style scoped>
 
-.category {
-  width: 20vw;
-  /*background: white;*/
+@keyframes scroll {
+  0% {
+    margin-left: 0;
+    transform: translateX(0);
+  }
+  100% {
+    margin-left: 100%;
+    transform: translateX(-100%);
+  }
+}
+
+.v-enter-active{
+  transition: 0.5s ease;
+}
+.v-leave-active{
+  transition: 0.5s ease;
+}
+.v-enter-from,.v-leave-to{
+  opacity: 0;
+}
+
+.switch {
+  display: inline-block;
+  width: 150px;
+  height: 30px;
+  position: absolute;
+  margin: 0;
+  padding: 5px;
+
+  box-shadow: -3px 5px 20px rgba(0, 0, 0, .1);
+  border: 3px solid;
+  border-image: linear-gradient(to right top, rgba(255, 255, 255, .0) 50%, rgba(255, 255, 255, .8) 100%) 20 20;
+}
+
+.switch .switch-arrow {
+  width: 25px;
+  transform: translateY(3px);
+}
+
+.switch .switch-scroll {
+  width: 95px;
+  display: inline-block;
+  margin: 0 15px 0 15px;
   overflow: hidden;
+  transform: translateY(2px);
 }
 
-.category .category-for-flex {
-  /*width: 15vw;*/
-  margin-left: 3vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease-in-out;
+.switch .switch-scroll .switch-title {
+  min-width: 100%;
+  white-space: nowrap;
+  margin: 0;
+  float: left;
+
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \5fae\8f6f\96c5\9ed1, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+
+  position: relative;
+  animation: scroll ease-in-out 3s alternate infinite;
+  animation-play-state: paused;
 }
 
-.category .category-for-flex .category-for-flex-element {
-  width: 10vw;
-  margin-bottom: 1vw;
-  transition: all 0.3s linear;
-}
-
-.category .category-for-flex .category-for-flex-element.on-display {
-  /*box-shadow: -3px 4px 10px rgba(0, 0, 0, 1);*/
-  filter: sepia(2) saturate(3) opacity(.5) drop-shadow(0 0 #FFCA02);
-  transition: all 0.3s linear;
-}
-
-.category .category-for-flex .category-for-flex-element.main-img-changing {
-  pointer-events: none;
-}
-
-
-.category .category-for-flex img:last-of-type {
-  margin-bottom: 0;
+.switch .switch-scroll .switch-title-on-hover {
+  animation-play-state: running;
 }
 
 .main {
   text-align: center;
+  height: 39vw;
 }
 
 .main img {
-  /*height: 55vh;*/
   width: 60vw;
   object-fit: cover;
   box-shadow: -10px 20px 35px rgba(0, 0, 0, .4);
-  /*margin: 0 auto;*/
   transition: all 0.3s linear;
 }
 
@@ -178,7 +215,7 @@ export default {
   display: block;
   margin: 0;
   color: #FFCA02;
-  font-family: "Tahoma", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \5fae\8f6f\96c5\9ed1, Arial, sans-serif;
   font-weight: bold;
   font-size: 6vw;
   transform: translateY(-4.5vw);
@@ -189,21 +226,19 @@ export default {
 .main .main-desc {
   display: inline-block;
   color: #FFCA02;
-  font-family: "Tahoma", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \5fae\8f6f\96c5\9ed1, Arial, sans-serif;
   font-size: 1.5vw;
   transform: translateY(-5vw);
   padding: 1vw;
   box-shadow: -3px 5px 20px rgba(0, 0, 0, .1);
+  text-shadow: -3px 5px 12px rgba(0, 0, 0, .2);
+  border: 3px solid;
+  border-image: linear-gradient(to right top, rgba(255, 255, 255, .0) 50%, rgba(255, 255, 255, .8) 100%) 20 20;
   transition: opacity 0.4s linear, transform 0.4s ease-in-out;
 }
 
 .main .main-name.main-img-changing, .main-desc.main-img-changing {
   opacity: 0;
   transform: translateY(0);
-}
-
-.label {
-  width: 20vw;
-  /*background: white;*/
 }
 </style>

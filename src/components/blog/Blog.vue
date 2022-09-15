@@ -2,7 +2,7 @@
   <div style="height: 3vh"></div>
   <div style="display: flex;">
     <div class="sidebar">
-      <div class="category">
+      <div class="back">
         <p class="title">Category</p>
         <span v-for="item in category" :style="{'background-color': item.onSelected? '#0E619E':'#909090'}" @click="onShow(item)">{{ item.name }}</span>
       </div>
@@ -110,7 +110,7 @@ export default {
   border-radius: 10px;
 }
 
-.sidebar .category {
+.sidebar .back {
   padding: 1vh 20px 1vh 20px;
 }
 
@@ -127,7 +127,7 @@ export default {
   color: rgba(0, 0, 0, .5);
 }
 
-.sidebar .category span {
+.sidebar .back span {
   display: inline-block;
   padding: 5px 10px;
   border-radius: 5px;
