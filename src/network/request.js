@@ -5,7 +5,7 @@ const request = axios.create({
     timeout: 6600,
     auth: {
         username: 'user',
-        password: 'd08adba1-3041-462e-986c-ed8e464e43d5'
+        password: 'c0c827c2-4573-43e9-b867-54e9b4f6cf0f'
     },
     // proxy: {
     //     protocol: 'http',
@@ -35,20 +35,21 @@ request.interceptors.request.use(
 // 拦截器
 request.interceptors.response.use(
     function (response) {
-        console.log(response)
-        // 2xx 范围内的状态码都会触发该函数。
-        // 对响应数据做点什么
-        // dataAxios 是 axios 返回数据中的 data
-        const dataAxios = response.data
-        // 这个状态码是和后端约定的
-        const code = dataAxios.reset
-        return dataAxios
+        return Promise.resolve({
+            status: response.status,
+            code: response.data.code,
+            msg: response.data.msg,
+        })
     },
     function (error) {
+        console.log(error)
         // 超出 2xx 范围的状态码都会触发该函数。
         // 对响应错误做点什么
-        console.log(error)
-        return Promise.reject(error)
+        return Promise.reject({
+            status: error.response.status,
+            code: error.response.data.code,
+            msg: error.response.data.msg,
+        })
     }
 )
 

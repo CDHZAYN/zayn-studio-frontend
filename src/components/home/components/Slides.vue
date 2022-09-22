@@ -98,6 +98,11 @@ export default {
       return getAssetsFile(name)
     }
   },
+  created(){
+    this.$request.get('/banner/get').then((response) => {
+      this.items = response.msg;
+    })
+  },
   mounted() {
     let _this = this
     this.switchTimer = setInterval(function () {

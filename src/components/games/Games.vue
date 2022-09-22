@@ -13,11 +13,8 @@ export default {
     }
   },
   mounted() {
-    this.$request.get('/test',
+    this.$request.get('/banner/get',
         {
-          params: {
-            id: 1431,
-          }
         }).then((response) => {
       console.log(response);
     });
