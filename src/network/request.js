@@ -3,19 +3,6 @@ import axios from "axios";
 const request = axios.create({
     baseURL: '/api',
     timeout: 6600,
-    auth: {
-        username: 'user',
-        password: 'c0c827c2-4573-43e9-b867-54e9b4f6cf0f'
-    },
-    // proxy: {
-    //     protocol: 'http',
-    //     host: 'localhost',
-    //     port: 8080,
-    //     auth: {
-    //         username: 'user',
-    //         password: '7e2bff04-3e80-42c0-b24d-8a2b912016aa'
-    //     }
-    // },
 })
 
 console.log(import.meta.env.VITE_BACKEND_URL)
