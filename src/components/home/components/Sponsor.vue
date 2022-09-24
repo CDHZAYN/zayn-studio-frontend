@@ -1,11 +1,14 @@
 <template>
   <span class="title">{{ title }}</span>
   <div class="main">
-    <div v-for="item in items" class="item">
-      <div class="avatar" :style="{'background-image': 'url('+getUrl(item.avatar)+')'}"></div>
-      <div style="display: flex;flex-direction: column">
-        <span class="name">{{ item.name }}</span>
-        <span class="desc">{{ item.desc }}</span>
+    <div v-for="(item, key) in items" class="item" @mouseenter="items[key].isHover = true"
+         @mouseleave="items[key].isHover = false">
+      <div class="word-frame">
+        <p :class="['desc', {'hover':items[key].isHover}]">{{ item.desc }} </p>
+        <p :class="['name', {'hover':items[key].isHover}]">{{ item.name }}</p>
+      </div>
+      <div :class="['avatar', {'hover':items[key].isHover}]">
+        <img :class="['avatar-img',{'hover': items[key].isHover}]" :src="getUrl(item.avatar)" alt=""/>
       </div>
     </div>
   </div>
@@ -13,6 +16,7 @@
 
 <script>
 import getAssetsFile from "../../../assets/getAssetsFile.js";
+
 export default {
   name: "Sponsor",
   props: {
@@ -24,7 +28,7 @@ export default {
       items: [
         {
           name: "littleBlack",
-          desc: "\"都jb兄弟\"",
+          desc: "walking on the time axis",
           avatar: 'zth.jpg',
           src: 'littleblack.cc'
         },
@@ -56,8 +60,8 @@ export default {
       backgroundImage: this.getUrl()
     }
   },
-  methods:{
-    getUrl(name){
+  methods: {
+    getUrl(name) {
       return getAssetsFile(name);
     }
   }
@@ -65,13 +69,25 @@ export default {
 </script>
 
 <style scoped>
+
+@keyframes scroll {
+  0% {
+    margin-left: 0;
+    transform: translateX(0);
+  }
+  100% {
+    margin-left: 100%;
+    transform: translateX(-100%);
+  }
+}
+
 .title {
   display: block;
-  margin-bottom: 2vh;
+  margin-bottom: 30px;
   color: #FFCA02;
   font-family: "Tahoma", serif;
   font-weight: bold;
-  font-size: 3vw;
+  font-size: 60px;
   /*text-shadow: 0 3px 3px rgba(255, 202, 2, .3);*/
   text-align: center;
 }
@@ -86,45 +102,85 @@ export default {
 
 .main .item {
   display: flex;
+  position: relative;
   /*background-color: lightyellow;*/
-  margin: 3vh 3vw;
-}
-
-.main .item:before {
-  content: '';
-  position: absolute;
-  width: 10vw;
-  height: 5vw;
-  background-image: linear-gradient(to top left, rgba(0, 0, 0, 0) 10%, rgba(255, 202, 2, .3) 100%);
-  border-radius: 10%;
-  z-index: -1;
-  transform: skew(45deg) translateX(50%);
+  margin: 10px 40px;
+  width: 200px;
+  height: 60px;
+  border: 3px solid;
+  border-image: linear-gradient(to right top, rgba(255, 255, 255, .0) 50%, rgba(255, 255, 255, .8) 100%) 20 20;
+  box-shadow: -3px 5px 20px rgba(0, 0, 0, .1);
 }
 
 .main .item .avatar {
-  width: 5vw;
-  height: 5vw;
-  background-size: cover;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 5px;
+  left: -27px;
   border-radius: 50%;
-  box-shadow: 0px 0px 10px #FFCA02;
+  box-shadow: -3px 5px 20px rgba(0, 0, 0, .1);
+  transition: all 0.5s ease-out;
 }
 
-.main .item .name {
-  display: block;
-  margin: 0.5vw 0 0 1vw;
-  text-align: center;
-  font-size: 1.5vw;
-  color: #FFCA02;
-  font-family: "Tahoma", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+.main .item .avatar.hover {
+  left: 178px;
 }
 
-.main .item .desc {
+.main .item .avatar .avatar-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transform: rotate(0deg);
+  transition: all 0.5s ease-out;
+}
+
+.main .item .avatar .avatar-img.hover {
+  transform: rotate(360deg);
+}
+
+.main .item .word-frame {
+  margin: 0;
+  width: 150px;
+  height: 60px;
+  left: 25px;
   display: block;
-  margin: 0.5vw 0 0 3vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.main .item .word-frame p{
+  font-weight: normal;
+  margin: 0;
+  transition: all 0.5s ease-out;
   text-align: center;
-  font-size: 0.9vw;
-  color: rgba(0, 0, 0, .8);
-  font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\5fae\8f6f\96c5\9ed1,Arial,sans-serif;
+  position: relative;
+}
+
+.main .item .word-frame .name {
+  bottom: 10px;
+  width: 150px;
+  font-size: 25px;
+  clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);
+}
+
+.main .item .word-frame .name.hover {
+  clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 0%);
+}
+
+.main .item .word-frame .desc {
+  min-width: 100%;
+  white-space: nowrap;
+  display: inline-block;
+  top: 18px;
+  font-size: 18px;
+  color: rgb(50, 50, 50);
+  clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%);
+}
+
+.main .item .word-frame .desc.hover {
+  clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);
+  animation: scroll ease-in-out 3s alternate infinite;
 }
 
 </style>

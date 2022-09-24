@@ -44,8 +44,9 @@ a {
   text-decoration: none;
   color: white;
   font-family: "BERNIER Regular", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  font-size: 3.5vh;
+  font-size: 22px;
   margin-left: 20px;
+  font-weight: bold;
 }
 
 

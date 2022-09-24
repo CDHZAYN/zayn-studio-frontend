@@ -10,23 +10,23 @@ export default [
         redirect: '/home'
     },
     {
-        name: 'home',
+        name: 'HOME',
         path: '/home',
         component: Home,
         color: '#FFCA02'
     }, {
-        name: 'games',
+        name: 'GAMES',
         path: '/games',
         component: Games,
         color: '#E83A37'
     },
     {
-        name: 'forum',
+        name: 'FORUM',
         path: '/forum',
         component: Forum,
         color: '#66CC33'
     }, {
-        name: 'blog',
+        name: 'BLOG',
         path: '/blog',
         component: Blog,
         color: '#0E619E'

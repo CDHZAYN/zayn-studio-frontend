@@ -1,7 +1,6 @@
 <template>
   <div class="blank1"></div>
   <Slides/>
-<!--  <div class="blank2"></div>-->
   <div v-for="item in items">
     <Sponsor :title="item.title"></Sponsor>
     <div class="blank3"></div>
@@ -33,7 +32,7 @@ export default {
 <style scoped>
 
 .blank1 {
-  padding-top: 3vh;
+  padding-top: 50px;
 }
 
 .blank2 {

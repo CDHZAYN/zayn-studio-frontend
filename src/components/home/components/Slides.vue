@@ -6,7 +6,7 @@
                         @back="changeDisplay"/>
     </div>
     <div class="main">
-      <img :src="getUrl(items[onDisplayIndex].pic)" :alt="items[onDisplayIndex].name"
+      <img :src="items[onDisplayIndex].pic ? items[onDisplayIndex].pic : '/default-banner.png'" :alt="items[onDisplayIndex].name"
            :class="{'main-img-changing': isMainImgChanging}">
       <p :class="['main-name', {'main-img-changing': isMainNameChanging}]">{{ items[onDisplayIndex].name }}</p>
       <p :class="['main-desc', {'main-img-changing': isMainDescChanging}]">{{ items[onDisplayIndex].desc }}</p>
@@ -100,6 +100,7 @@ export default {
   },
   created(){
     this.$request.get('/banner/get').then((response) => {
+      console.log(response)
       this.items = response.msg;
     })
   },
@@ -123,7 +124,7 @@ export default {
 .main img {
   width: 60vw;
   object-fit: cover;
-  box-shadow: -10px 20px 35px rgba(0, 0, 0, .4);
+  box-shadow: -10px 20px 35px rgba(0, 0, 0, .2);
   transition: all 0.3s linear;
 }
 
@@ -151,9 +152,9 @@ export default {
   transform: translateY(-5vw);
   padding: 1vw;
   box-shadow: -3px 5px 20px rgba(0, 0, 0, .1);
-  text-shadow: -3px 5px 12px rgba(0, 0, 0, .2);
+  /*text-shadow: -3px 5px 3px rgba(0, 0, 0, .1);*/
   border: 3px solid;
-  border-image: linear-gradient(to right top, rgba(255, 255, 255, .0) 50%, rgba(255, 255, 255, .8) 100%) 20 20;
+  border-image: linear-gradient(to right top, rgba(255, 255, 255, .0) 30%, rgba(255, 255, 255, .8) 100%) 20 20;
   transition: opacity 0.4s linear, transform 0.4s ease-in-out;
 }
 
