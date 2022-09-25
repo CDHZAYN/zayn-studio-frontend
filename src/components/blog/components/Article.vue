@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      html: String
+      html: '<h1>哔卟</h1><p>this is a default page. WUH锟斤拷烫烫烫烫烫烫烫烫烫烫烫烫别把热水浇我身上！</p>'
     }
   },
   watch: {
