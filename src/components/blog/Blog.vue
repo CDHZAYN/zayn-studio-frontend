@@ -4,19 +4,24 @@
     <div class="sidebar">
       <div class="back">
         <p class="title">Category</p>
-        <span v-for="item in category" :style="{'background-color': item.onSelected? '#0E619E':'#909090'}" @click="onShow(item)">{{ item.name }}</span>
+        <span v-for="item in category"
+              :style="{'background-color': this.categorySelected.indexOf(item)!==-1? '#0E619E':'#909090'}"
+              @click="changeState(item)">{{ item }}</span>
       </div>
       <div class="timeline">
         <p class="title">Timeline</p>
-        <p class="nothing" v-show="nothing===0">there's nothing here, please select one or more categories above</p>
-        <div v-for="item in timeline" class="article" v-show="nothing!==0">
+        <p class="nothing" v-show="articleSelected.length===0">there's nothing here, please select one or more
+          categories above</p>
+        <div v-for="item in articleSelected" class="article-profile" v-show="categorySelected.length!==0" @click="onShowId = item._id">
           <p class="a-time">{{ item.time }}</p>
           <p class="a-title">{{ item.title }}</p>
           <p class="a-desc">{{ item.desc }}</p>
         </div>
       </div>
     </div>
-    <Article :aid="onShowAid" style="width: 68vw;margin: 0 5vw 0 0;border-radius: 10px;background-color: white"/>
+    <div class="article">
+      <Article :id="onShowId"/>
+    </div>
   </div>
 </template>
 
@@ -28,55 +33,55 @@ export default {
   components: {Article},
   data() {
     return {
-      nothing: 0,
-      category:
-          [
-            {
-              name: 'base',
-              onSelected: false,
-            },
-            {
-              name: 'java',
-              onSelected: false,
-            },
-            {
-              name: 'album of dead',
-              onSelected: false,
-            }
-          ],
-      timeline: [
-        {
-          aid: 1,
-          title: '建站第一篇',
-          category: 'base/java/album of dead',
-          desc: 'dfsadsfsdfsadasab',
-          time: '2002-09-03'
-        },
-        {
-          aid: 2,
-          title: '虚拟机？',
-          category: 'base/album of dead',
-          desc: 'dfsadsfsdfsadasab',
-          time: '2002-09-03'
-        },
-        {
-          aid: 3,
-          title: 'i guess it doesn\'t work',
-          category: 'album of dead',
-          desc: 'dfsadsfsdfsadasab',
-          time: '2002-09-03'
-        }
+      category: [
+        'base',
+        'java',
+        'album of dead',
+        'the first',
       ],
-      onShowAid: Number
+      categorySelected: [],
+      article: Array,
+      articleSelected: [],
+      onShowId: String
     }
   },
   methods: {
-    onShow(item) {
-      if (item.onSelected) --this.nothing
-      else ++this.nothing
-      item.onSelected = !item.onSelected
-      // console.log(this.category)
+    changeState(item) {
+      let categorySelected = this.categorySelected
+      let articleSelected = this.articleSelected
+      if (categorySelected.indexOf(item) !== -1) {
+        categorySelected.splice(categorySelected.indexOf(item), 1)
+        this.articleSelected = articleSelected.filter(e => {
+          let flag = false
+          e.category.forEach(ee => {
+            if (ee === item)
+              return
+            if (categorySelected.indexOf(ee) !== -1)
+              flag = true
+          })
+          return flag
+        })
+      } else {
+        categorySelected.push(item)
+        this.article.forEach(e => {
+          if (e.category.indexOf(item) !== -1 && articleSelected.indexOf(e) === -1)
+            articleSelected.push(e)
+        })
+      }
+      // console.log(this.categorySelected)
     }
+  },
+  created() {
+    this.$request.get('/article/getAll').then((res) => {
+          this.article = res.msg;
+          this.article.forEach(e =>{
+            let str = e._id.slice(0, 8)
+            // console.log(typeof e._id, e._id)
+            let date = new Date(Number(parseInt(str, 16).toString()*1000));
+            e.time = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
+          })
+        }
+    )
   }
 
 }
@@ -143,13 +148,16 @@ export default {
   position: relative;
 }
 
-.sidebar .timeline .article {
+.sidebar .timeline .article-profile {
   /*border-left: rgba(14, 97, 158, 0.5) 2px solid;*/
+  display: block;
   height: 11vh;
   padding-left: 15px;
+  width: 15vw;
+  background: none;
 }
 
-.sidebar .timeline .article:before {
+.sidebar .timeline .article-profile:before {
   content: '';
   background-color: rgba(14, 97, 158, 1);
   height: 12px;
@@ -160,43 +168,52 @@ export default {
   border-radius: 10px;
 }
 
-.sidebar .timeline .article:after {
+.sidebar .timeline .article-profile:after {
   content: '';
   width: 2px;
   height: 11vh;
   background: linear-gradient(to bottom, rgba(14, 97, 158, 0.6) 0%, #0E619E 20%, rgba(0, 0, 0, 0) 100%);
   position: absolute;
   left: 20px;
-  transform: translate(-20%,-70%);
+  transform: translate(-20%, -70%);
 }
 
-.sidebar .timeline .article p{
+.sidebar .timeline .article-profile p {
   margin: 0;
 }
 
-.sidebar .timeline .article .a-time{
+.sidebar .timeline .article-profile .a-time {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   font-size: 14px;
   color: rgba(0, 0, 0, .3);
 }
 
-.sidebar .timeline .article .a-title{
+.sidebar .timeline .article-profile .a-title {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   font-weight: bold;
   font-size: 16px;
   margin: 5px 0 4px 0;
 }
 
-.sidebar .timeline .article .a-desc{
+.sidebar .timeline .article-profile .a-desc {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   font-size: 14px;
   color: rgba(0, 0, 0, .7);
+}
+
+.article {
+  width: 68vw;
+  margin: 0 5vw 0 0;
+  padding: 25px 35px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: white;
 }
 
 </style>

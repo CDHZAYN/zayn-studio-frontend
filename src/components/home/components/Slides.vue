@@ -28,7 +28,7 @@ export default {
   components: {SlidesButton},
   data() {
     return {
-      onDisplayIndex: 2,
+      onDisplayIndex: 0,
       items: [
         {
           name: 'Definitive Future',

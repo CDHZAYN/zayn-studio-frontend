@@ -1,6 +1,6 @@
 <template>
   <div class="color" :style="{'background-color': color}">
-    <p style="padding-top: 30px">Created By CDH2AYN</p>
+    <p style="padding-top: 10px">Created By CDH2AYN</p>
     <div style="text-align:center;padding:0;">
       <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=45010302002938"
          style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
@@ -25,7 +25,7 @@ export default {
 <style scoped>
 .color {
   width: 100%;
-  height: 100px;
+  height: 80px;
   /*background-color: rgb(255, 202, 2);*/
   transition: all 0.3s linear;
 }

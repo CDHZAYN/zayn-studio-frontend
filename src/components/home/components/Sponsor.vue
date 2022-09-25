@@ -1,16 +1,16 @@
 <template>
   <span class="title">{{ title }}</span>
   <div class="main">
-    <div v-for="(item, key) in items" class="item" @mouseenter="items[key].isHover = true"
-         @mouseleave="items[key].isHover = false">
+    <a v-for="(item, key) in items" :href="item.src" class="item" @mouseenter="item.isHover = true"
+         @mouseleave="item.isHover = false">
       <div class="word-frame">
-        <p :class="['desc', {'hover':items[key].isHover}]">{{ item.desc }} </p>
-        <p :class="['name', {'hover':items[key].isHover}]">{{ item.name }}</p>
+        <p :class="['desc', {'hover':item.isHover}]">{{ item.desc }} </p>
+        <p :class="['name', {'hover':item.isHover}]">{{ item.name }}</p>
       </div>
-      <div :class="['avatar', {'hover':items[key].isHover}]">
-        <img :class="['avatar-img',{'hover': items[key].isHover}]" :src="getUrl(item.avatar)" alt=""/>
+      <div :class="['avatar', {'hover':item.isHover}]">
+        <img :class="['avatar-img',{'hover': item.isHover}]" :src="item.avatar? item.avatar : getUrl('studio.png')" alt=""/>
       </div>
-    </div>
+    </a>
   </div>
 </template>
 
@@ -27,35 +27,10 @@ export default {
     return {
       items: [
         {
-          name: "littleBlack",
-          desc: "walking on the time axis",
-          avatar: 'zth.jpg',
-          src: 'littleblack.cc'
+          name: "THX BROS!",
+          desc: "get the juice!",
+          src: '###'
         },
-        {
-          name: "ZY",
-          desc: "miku fan~",
-          avatar: 'studio.png',
-          src: 'zyinnju.com'
-        },
-        {
-          name: "littleBlack",
-          desc: "\"都jb兄弟\"",
-          avatar: 'zth.jpg',
-          src: 'littleblack.cc'
-        },
-        {
-          name: "littleBlack",
-          desc: "\"都jb兄弟\"",
-          avatar: 'zth.jpg',
-          src: 'littleblack.cc'
-        },
-        {
-          name: "ZY",
-          desc: "miku fan~",
-          avatar: 'studio.png',
-          src: 'zyinnju.com'
-        }
       ],
       backgroundImage: this.getUrl()
     }
@@ -64,6 +39,12 @@ export default {
     getUrl(name) {
       return getAssetsFile(name);
     }
+  },
+  created(){
+    this.$request.get('bro-sponsor/get').then((res)=>{
+      console.log(res.msg)
+      this.items = this.items.concat(res.msg)
+    })
   }
 }
 </script>
@@ -155,6 +136,8 @@ export default {
   transition: all 0.5s ease-out;
   text-align: center;
   position: relative;
+  display: inline-block;
+  color: black;
 }
 
 .main .item .word-frame .name {
@@ -162,6 +145,7 @@ export default {
   width: 150px;
   font-size: 25px;
   clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);
+  text-decoration: none;
 }
 
 .main .item .word-frame .name.hover {
@@ -171,7 +155,6 @@ export default {
 .main .item .word-frame .desc {
   min-width: 100%;
   white-space: nowrap;
-  display: inline-block;
   top: 18px;
   font-size: 18px;
   color: rgb(50, 50, 50);
