@@ -27,9 +27,9 @@ export default {
     return {
       items: [
         {
-          name: "THX BROS!",
+          name: "THX!",
           desc: "get the juice!",
-          src: '###'
+          src: 'javascript:void(0);'
         },
       ],
       backgroundImage: this.getUrl()
@@ -40,10 +40,13 @@ export default {
       return getAssetsFile(name);
     }
   },
-  created(){
-    this.$request.get('bro-sponsor/get').then((res)=>{
+  mounted(){
+    console.log(this.title.split(' ')[0].toLowerCase()+'-sponsor/get')
+    this.$request.get(this.title.split(' ')[0].toLowerCase()+'-sponsor/get').then((res)=>{
       console.log(res.msg)
-      this.items = this.items.concat(res.msg)
+      this.items = res.msg
+    }).catch((msg)=>{
+       console.log('connction failed!',msg)
     })
   }
 }
@@ -71,6 +74,7 @@ export default {
   font-size: 60px;
   /*text-shadow: 0 3px 3px rgba(255, 202, 2, .3);*/
   text-align: center;
+  user-select: none;
 }
 
 .main {
@@ -138,6 +142,7 @@ export default {
   position: relative;
   display: inline-block;
   color: black;
+  user-select: none;
 }
 
 .main .item .word-frame .name {

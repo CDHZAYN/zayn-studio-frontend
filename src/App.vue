@@ -29,7 +29,7 @@ export default {
   watch: {
     $route(newVal) {
       let nowPath = this.$route.fullPath
-      // console.log('changed!', this.routes.filter(o=>o.path === nowPath)[0].color)
+      console.log('changed!', this.routes.filter(o=>o.path === nowPath)[0].color)
       this.nowColor = this.routes.filter(o => o.path === nowPath)[0].color
       sessionStorage.setItem('nowColor', this.nowColor)
     }

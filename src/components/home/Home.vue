@@ -1,8 +1,8 @@
 <template>
   <div class="blank1"></div>
   <Slides/>
-  <div v-for="item in items">
-    <Sponsor :title="item.title"></Sponsor>
+  <div v-for="title in titles">
+    <Sponsor :title="title"></Sponsor>
     <div class="blank3"></div>
   </div>
 </template>
@@ -15,13 +15,9 @@ export default {
   name: "Home",
   data() {
     return {
-      items: [
-        {
-          title: 'Bro Sponsor'
-        },
-        {
-          title: 'Tech Sponsor'
-        }
+      titles: [
+          'Cute Sponsor',
+          'Bro Sponsor',
       ]
     }
   },

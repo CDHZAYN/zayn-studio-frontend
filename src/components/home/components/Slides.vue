@@ -2,19 +2,20 @@
   <div style="display: flex;">
     <div style="width: 20vw; height: 25.714vw; position: relative;">
       <SlidesButton style="right: 20%;bottom: 10%" type="BACK"
-                        :button-name="items[onDisplayIndex - 1 >= 0 ? onDisplayIndex - 1: items.length - 1].name"
-                        @back="changeDisplay"/>
+                    :button-name="items[onDisplayIndex - 1 >= 0 ? onDisplayIndex - 1: items.length - 1].name"
+                    @back="changeDisplay"/>
     </div>
     <div class="main">
-      <img :src="items[onDisplayIndex].pic ? items[onDisplayIndex].pic : '/default-banner.png'" :alt="items[onDisplayIndex].name"
+      <img :src="items[onDisplayIndex].pic ? items[onDisplayIndex].pic : '/default-banner.png'"
+           :alt="items[onDisplayIndex].name"
            :class="{'main-img-changing': isMainImgChanging}">
       <p :class="['main-name', {'main-img-changing': isMainNameChanging}]">{{ items[onDisplayIndex].name }}</p>
       <p :class="['main-desc', {'main-img-changing': isMainDescChanging}]">{{ items[onDisplayIndex].desc }}</p>
     </div>
     <div style="width: 20vw; height: 25.714vw; position: relative;">
       <SlidesButton style="left: 20%;bottom: 10%" type="NEXT"
-                        :button-name="items[onDisplayIndex + 1 < items.length ? onDisplayIndex + 1: 0].name"
-                        @back="changeDisplay"/>
+                    :button-name="items[onDisplayIndex + 1 < items.length ? onDisplayIndex + 1: 0].name"
+                    @back="changeDisplay"/>
     </div>
   </div>
 </template>
@@ -31,28 +32,9 @@ export default {
       onDisplayIndex: 0,
       items: [
         {
-          name: 'Definitive Future',
-          pic: '1-2.jpg',
-          desc: 'Available on my mind'
-        },
-        {
-          name: 'bbb',
-          pic: '2-2.png',
-          desc: 'sadf'
-        }, {
-          name: 'ccc',
-          pic: '3-2.png',
-          desc: 'qwbsbqe'
-        }, {
-          name: 'aaa',
-          pic: '1-2.jpg',
-          desc: 'caxgaewg'
-        },
-        {
-          name: 'bbb',
-          pic: '2-2.png',
-          desc: 'wqg gwqwrg'
-        },
+          name: 'LOADING',
+          desc: 'please wait...'
+        }
       ],
       isMainImgChanging: false,
       isMainNameChanging: false,
@@ -98,7 +80,7 @@ export default {
       return getAssetsFile(name)
     }
   },
-  created(){
+  created() {
     this.$request.get('/banner/get').then((response) => {
       console.log(response)
       this.items = response.msg;
@@ -119,6 +101,7 @@ export default {
 .main {
   text-align: center;
   height: 39vw;
+  user-select: none;
 }
 
 .main img {

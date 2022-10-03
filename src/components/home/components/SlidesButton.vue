@@ -91,6 +91,7 @@ export default {
   margin: 0 15px 0 15px;
   overflow: hidden;
   transform: translateY(2px);
+  user-select: none;
 }
 
 .button .button-word-frame .button-word {
