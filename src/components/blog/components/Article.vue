@@ -30,11 +30,13 @@ export default {
   watch: {
     id: {
       handler(newVal) {
+        console.log(newVal)
         this.$request.get('/article/getHtml', {
           params: {
             _id: newVal
           }
         }).then((res) => {
+              console.log(res.msg)
               this.html = res.msg.html
             }
         )
@@ -48,16 +50,19 @@ export default {
 
 .html>>>h1 {
   text-align: center;
+  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
 }
 
 .html>>>blockquote {
   color: rgb(125, 125, 125);
   text-align: center;
   font-style: oblique;
+  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
 }
 
 .html>>>p,.html>>>li {
   line-height: 25px;
+  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
 }
 
 .html>>>.img-wrapper {
@@ -78,6 +83,7 @@ export default {
 .cc a {
   text-decoration: none;
   color: #FFCA02;
+  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
 }
 
 .cc a img {

@@ -69,7 +69,7 @@ export default {
   display: block;
   margin-bottom: 30px;
   color: #FFCA02;
-  font-family: "Tahoma", serif;
+  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
   font-weight: bold;
   font-size: 60px;
   /*text-shadow: 0 3px 3px rgba(255, 202, 2, .3);*/

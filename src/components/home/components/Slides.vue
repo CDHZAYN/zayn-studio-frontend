@@ -119,7 +119,7 @@ export default {
   display: block;
   margin: 0;
   color: #FFCA02;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \5fae\8f6f\96c5\9ed1, Arial, sans-serif;
+  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
   font-weight: bold;
   font-size: 6vw;
   transform: translateY(-4.5vw);
@@ -130,7 +130,7 @@ export default {
 .main .main-desc {
   display: inline-block;
   color: #FFCA02;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \5fae\8f6f\96c5\9ed1, Arial, sans-serif;
+  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
   font-size: 1.5vw;
   transform: translateY(-5vw);
   padding: 1vw;

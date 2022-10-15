@@ -12,10 +12,11 @@
         <p class="title">Timeline</p>
         <p class="nothing" v-show="articleSelected.length===0">there's nothing here, please select one or more
           categories above</p>
-        <div v-for="item in articleSelected" class="article-profile" v-show="categorySelected.length!==0" @click="onShowId = item._id">
-          <p class="a-time">{{ item.time }}</p>
+        <div v-for="item in articleSelected" class="article-profile" v-show="categorySelected.length!==0"
+             @click="onShowId = item._id" :data-height-is-short="onShowId!==item._id">
+          <p class="a-time" v-show="onShowId===item._id">{{ item.time }}</p>
           <p class="a-title">{{ item.title }}</p>
-          <p class="a-desc">{{ item.desc }}</p>
+          <p class="a-desc" v-show="onShowId===item._id">{{ item.desc }}</p>
         </div>
       </div>
     </div>
@@ -33,6 +34,7 @@ export default {
   components: {Article},
   data() {
     return {
+      test: false,
       category: [
         'base',
         'java',
@@ -74,10 +76,10 @@ export default {
   created() {
     this.$request.get('/article/getAll').then((res) => {
           this.article = res.msg;
-          this.article.forEach(e =>{
+          this.article.forEach(e => {
             let str = e._id.slice(0, 8)
             // console.log(typeof e._id, e._id)
-            let date = new Date(Number(parseInt(str, 16).toString()*1000));
+            let date = new Date(Number(parseInt(str, 16).toString() * 1000));
             e.time = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
           })
         }
@@ -102,7 +104,7 @@ export default {
   padding: 5px 10px;
   border-radius: 5px;
   margin: 10px 0 10px 8px;
-  font-family: "Tahoma", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
   /*background-color: #0E619E;*/
   color: white;
   font-size: 15px;
@@ -111,8 +113,10 @@ export default {
 .sidebar {
   margin: 0 2vw 0 5vw;
   width: 20vw;
+  height: 80vh;
   background-color: white;
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .sidebar .back {
@@ -137,7 +141,7 @@ export default {
   padding: 5px 10px;
   border-radius: 5px;
   margin: 10px 8px 0 0;
-  font-family: "Tahoma", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
   background-color: #0E619E;
   color: white;
   font-size: 15px;
@@ -151,10 +155,18 @@ export default {
 .sidebar .timeline .article-profile {
   /*border-left: rgba(14, 97, 158, 0.5) 2px solid;*/
   display: block;
-  height: 11vh;
+  height: 30px;
   padding-left: 15px;
   width: 15vw;
   background: none;
+}
+
+.sidebar .timeline .article-profile[data-height-is-short=true]{
+  height: 30px;
+}
+
+.sidebar .timeline .article-profile[data-height-is-short=false]{
+  height: 80px;
 }
 
 .sidebar .timeline .article-profile:before {
@@ -168,14 +180,21 @@ export default {
   border-radius: 10px;
 }
 
-.sidebar .timeline .article-profile:after {
+.sidebar .timeline .article-profile::after {
   content: '';
   width: 2px;
-  height: 11vh;
   background: linear-gradient(to bottom, rgba(14, 97, 158, 0.6) 0%, #0E619E 20%, rgba(0, 0, 0, 0) 100%);
   position: absolute;
   left: 20px;
   transform: translate(-20%, -70%);
+}
+
+.sidebar .timeline .article-profile[data-height-is-short=true]::after{
+  height: 30px;
+}
+
+.sidebar .timeline .article-profile[data-height-is-short=false]::after{
+  height: 90px;
 }
 
 .sidebar .timeline .article-profile p {

@@ -1,9 +1,5 @@
 <template>
-  <a>
-    <p>
-      fdsafsaddasvdg
-    </p>
-  </a>
+  <div v-for="item in list" class="wuhu" :data-background="item.test"/>
 </template>
 
 <script>
@@ -11,20 +7,27 @@ export default {
   name: "Forum",
   data() {
     return {
-      show:true
+      list: [
+        {
+          id: 1,
+          test: 'red'
+        },{
+          id: 2,
+          test: 'blue'
+        }
+      ],
+      test: 'red',
     }
   },
-  methods:{
-    getIt(){
-      this.wuhu = !this.wuhu;
-    }
-  }
+  methods: {}
 }
 </script>
 
 <style scoped>
-a p{
-  text-decoration:none;
+.wuhu[data-background="red"]{
+  width: 100px;
+  height: 100px;
+  background: red;
 }
 
 </style>

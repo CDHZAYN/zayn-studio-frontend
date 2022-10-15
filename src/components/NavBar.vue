@@ -1,6 +1,6 @@
 <template>
   <div class="background" :style="{'background-color': color}">
-    <router-link v-for="item in routes" :to="item.path" @click="$emit('color', item.color)">
+    <router-link v-for="item in routes" :to="item.path" @click="$emit('color', item.color)" v-show="item.show">
       {{ item.name }}
     </router-link>
     <img src="/studio.png" class="icon" alt="icon">
@@ -43,7 +43,7 @@ export default {
 a {
   text-decoration: none;
   color: white;
-  font-family: "BERNIER Regular", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;;
   font-size: 22px;
   margin-left: 20px;
   font-weight: bold;

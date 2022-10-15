@@ -33,5 +33,6 @@ export default {
 .color p {
   text-align: center;
   color: white;
+  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
 }
 </style>

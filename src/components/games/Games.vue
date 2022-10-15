@@ -2,17 +2,24 @@
   <div class="blank"></div>
   <div id="games-background">
     <div class="games">
-      <div class="game" v-for="item in items" @mouseenter="item.isHover = true" @mouseleave="item.isHover = false">
-        <img :src="getUrl('studio.png')" :alt="item.name">
-        <h1>{{ item.name }}</h1>
-        <p v-for="keyword in item.keywords">{{ keyword }}</p>
+      <a class="game" v-for="item in items" @mouseenter="item.isHover = true" @mouseleave="item.isHover = false"
+         :href="item.src? item.src: 'javascript:void(0);'">
+        <img :src="item.avatar? item.avatar : getUrl('studio.png')" :alt="item.name">
+        <div class="name">
+          <h1>{{ item.name }}</h1>
+        </div>
+        <div class="keywords">
+          <p v-for="(keyword, index) in item.keywords">
+            {{ keyword }}<span v-show="index!==item.keywords.length-1">&nbsp;/&nbsp;</span>
+          </p>
+        </div>
         <Transition name="border1">
           <div class="game-border1" v-show="item.isHover"></div>
         </Transition>
         <Transition name="border2">
           <div class="game-border2" v-show="item.isHover"></div>
         </Transition>
-      </div>
+      </a>
     </div>
   </div>
   <div class="blank"></div>
@@ -27,48 +34,9 @@ export default {
     return {
       items: [
         {
-          name: 'wuhu',
-          keywords: ['wuhu1, wuhu2, wuhu3'],
-          avatar: 'studio.png'
-        }, {
-          name: 'wuhu',
-          keywords: ['wuhu1, wuhu2, wuhu3'],
-          avatar: 'studio.png'
-        },
-        {
-          name: 'wuhu',
-          keywords: ['wuhu1, wuhu2, wuhu3'],
-          avatar: 'studio.png'
-        },
-        {
-          name: 'wuhu',
-          keywords: ['wuhu1, wuhu2, wuhu3'],
-          avatar: 'studio.png'
-        },
-        {
-          name: 'wuhu',
-          keywords: ['wuhu1, wuhu2, wuhu3'],
-          avatar: 'studio.png'
-        },
-        {
-          name: 'wuhu',
-          keywords: ['wuhu1, wuhu2, wuhu3'],
-          avatar: 'studio.png'
-        },
-        {
-          name: 'wuhu',
-          keywords: ['wuhu1, wuhu2, wuhu3'],
-          avatar: 'studio.png'
-        },
-        {
-          name: 'wuhu',
-          keywords: ['wuhu1, wuhu2, wuhu3'],
-          avatar: 'studio.png'
-        },
-        {
-          name: 'wuhu',
-          keywords: ['wuhu1, wuhu2, wuhu3'],
-          avatar: 'studio.png'
+          name: 'BAG',
+          keywords: ['component', 'opensource'],
+          src: '../bag'
         }
       ]
     }
@@ -78,10 +46,10 @@ export default {
       return getAssetsFile(name)
     }
   },
-  mounted() {
-    this.$request.get('/banner/get',
+  created() {
+    this.$request.get('/game/get',
         {}).then((response) => {
-      console.log(response);
+      this.items = this.items.concat(response.msg)
     });
   }
 }
@@ -89,7 +57,7 @@ export default {
 
 <style scoped>
 
-.border1-leave-active{
+.border1-leave-active {
   transition-delay: 0.3s;
 }
 
@@ -110,7 +78,7 @@ export default {
 #games-background {
   /*position: relative;*/
   width: 100vw;
-  background: linear-gradient(#FAFAF4 0, #FAFAF4 80%, white 95%, white 100%);
+  background: linear-gradient(#FAFAF4 0, #FAFAF4 80%, rgba(255, 202, 2, 0.2) 100%);
   background-size: 100% 370px;
   background-position-y: -110px;
   /*z-index: -2;*/
@@ -143,7 +111,7 @@ export default {
   background: #FAFAF4;
   border-radius: 10px;
   z-index: -1;
-  transition: display 0.5s linear;
+  transition: display 0.3s linear;
 }
 
 .games .game .game-border2 {
@@ -153,10 +121,11 @@ export default {
   width: 100%;
   height: 100%;
   background: linear-gradient(to top, rgba(255, 202, 2, 1) 0, rgba(232, 58, 55, 1) 100%);
-  filter: blur(15px);
+  filter: blur(7px);
   border-radius: 10px;
   z-index: -2;
-  transition: all 0.5s linear;
+  transition: all 0.3s linear;
+  text-decoration: none;
 }
 
 .games .game img {
@@ -165,15 +134,31 @@ export default {
   border-radius: 10px 10px 0 0;
 }
 
-.games .game h1 {
+.games .game .name {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.games .game .name h1 {
+  display: inline-block;
   margin: 8px;
   font-size: 23px;
+  color: black;
+}
+
+.games .game .keywords {
   text-align: center;
 }
 
-.games .game p {
-  margin: 10px;
-  text-align: center;
+.games .game .keywords p {
+  display: inline-block;
+  margin: 0;
+  color: black;
+}
+
+.games .game .keywords p span {
+  color: #FFCA02;
 }
 
 </style>
