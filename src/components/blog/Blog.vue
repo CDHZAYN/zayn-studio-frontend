@@ -37,7 +37,7 @@ export default {
       test: false,
       category: [
         'base',
-        'java',
+        'CC',
         'album of dead',
         'the first',
       ],
