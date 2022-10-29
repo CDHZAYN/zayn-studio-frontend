@@ -36,10 +36,11 @@ export default {
     return {
       test: false,
       category: [
+        'the first',
         'base',
         'CC',
+        'NJU 2022FALL',
         'album of dead',
-        'the first',
       ],
       categorySelected: [],
       article: Array,
