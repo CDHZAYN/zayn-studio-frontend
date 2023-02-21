@@ -69,12 +69,21 @@ export default {
         })
       } else {
         categorySelected.push(item)
+        let insertIndex = 0
         this.article.forEach(e => {
-          if (e.category.indexOf(item) !== -1 && articleSelected.indexOf(e) === -1)
-            articleSelected.push(e)
+          if (e.category.indexOf(item) !== -1 && articleSelected.indexOf(e) === -1) {
+            if (articleSelected.length === 0)
+              articleSelected.push(e)
+            else{
+              while(insertIndex < articleSelected.length
+              && e._id.slice(0, 8) < articleSelected.at(insertIndex)._id.slice(0, 8))
+                ++insertIndex
+              articleSelected.splice(insertIndex, 0, e)
+            }
+          }
         })
+        console.log(articleSelected)
       }
-      // console.log(this.categorySelected)
     }
   },
   created() {
@@ -120,7 +129,24 @@ export default {
   height: 80vh;
   background-color: white;
   border-radius: 10px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 5px;
+  background-color: yellow;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: white;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: rgba(14, 97, 158, 0.6);
 }
 
 .sidebar .back {
@@ -165,11 +191,11 @@ export default {
   background: none;
 }
 
-.sidebar .timeline .article-profile[data-height-is-short=true]{
+.sidebar .timeline .article-profile[data-height-is-short=true] {
   height: 30px;
 }
 
-.sidebar .timeline .article-profile[data-height-is-short=false]{
+.sidebar .timeline .article-profile[data-height-is-short=false] {
   height: 80px;
 }
 
@@ -193,11 +219,11 @@ export default {
   transform: translate(-20%, -70%);
 }
 
-.sidebar .timeline .article-profile[data-height-is-short=true]::after{
+.sidebar .timeline .article-profile[data-height-is-short=true]::after {
   height: 30px;
 }
 
-.sidebar .timeline .article-profile[data-height-is-short=false]::after{
+.sidebar .timeline .article-profile[data-height-is-short=false]::after {
   height: 90px;
 }
 

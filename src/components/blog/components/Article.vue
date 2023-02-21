@@ -31,6 +31,7 @@ export default {
     id: {
       handler(newVal) {
         console.log(newVal)
+        this.html = '<h1>Loading!</h1><blockquote><p>Please wait...</p></blockquote>'
         this.$request.get('/article/getHtml', {
           params: {
             _id: newVal

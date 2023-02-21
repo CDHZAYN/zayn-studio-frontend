@@ -32,13 +32,7 @@ export default {
   name: "Games",
   data() {
     return {
-      items: [
-        {
-          name: 'BAG',
-          keywords: ['component', 'opensource'],
-          src: '../bag'
-        }
-      ]
+      items: []
     }
   },
   methods: {
@@ -46,9 +40,15 @@ export default {
       return getAssetsFile(name)
     }
   },
-  created() {
+  // created() {
+  mounted() {
     this.$request.get('/game/get',
         {}).then((response) => {
+      // this.items.push({
+      //   name: 'BAG',
+      //   keywords: ['component', 'opensource'],
+      //   src: '../bag'
+      // })
       this.items = this.items.concat(response.msg)
     });
   }
