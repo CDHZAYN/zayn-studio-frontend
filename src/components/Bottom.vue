@@ -2,11 +2,10 @@
   <div class="color" :style="{'background-color': color}">
     <p style="padding-top: 10px">Created By CDH2AYN</p>
     <div style="text-align:center;padding:0;">
-      <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=45010302002938"
+      <a target="_blank" href="https://beian.miit.gov.cn/"
          style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
         <img src="/beian.png" style="float:left;"/>
-        <p style="float:left;height:20px;line-height:20px;margin: 0 0 0 5px; color:#939393;">桂公网安备
-          45010302002938号</p>
+        <p style="float:left;height:20px;line-height:20px;margin: 0 0 0 5px; color:#939393;">桂ICP备2022008373号</p>
       </a>
     </div>
 
