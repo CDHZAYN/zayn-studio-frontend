@@ -8,7 +8,7 @@
            style="border-width:0;"
            src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/>
     </a>
-    <br/>本作品采用
+    <br/>本网站博客遵守
     <a
         rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享
       4.0 国际许可协议</a>
@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      html: '<h1>哔卟</h1><p>this is a default page. WUH锟斤拷烫烫烫烫烫烫烫烫烫烫烫烫别把热水浇我身上！</p>'
+      html: '<h1>哔卟</h1><p>This is a default page. WUH锟斤拷烫烫烫烫烫烫烫烫烫烫烫烫别把热水浇我身上！</p>'
     }
   },
   watch: {
@@ -78,12 +78,13 @@ export default {
   margin-top: 30px;
   text-align: center;
   font-size: 13px;
-  color: #0E619E;
+  color: black;
 }
 
 .cc a {
   text-decoration: none;
-  color: #FFCA02;
+  color: #0E619E;
+  font-weight: bold;
   font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
 }
 

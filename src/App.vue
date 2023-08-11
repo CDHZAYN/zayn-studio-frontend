@@ -1,5 +1,5 @@
 <template>
-  <div style="min-height: calc(100vh - 96px);">
+  <div style="min-height: calc(100vh - 82px);">
     <nav-bar @color="changeColor" :color="nowColor" :routes="routes"/>
     <router-view/>
   </div>
@@ -38,9 +38,5 @@ export default {
 </script>
 
 <style scoped>
-
-Bottom {
-  margin-left: -4px;
-}
 
 </style>

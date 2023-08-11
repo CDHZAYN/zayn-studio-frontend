@@ -9,14 +9,17 @@
     </div>
     <div class="button-word-frame">
       <Transition type="transition" mode="out-in">
-        <h6 class="button-word" v-if="!isHover" key="q1">{{ type }}</h6>
+        <h6 class="button-word" v-if="!isHover" :style="{'text-align': type === 'NEXT'? 'right' : 'left'}"
+            key="q1">
+          {{ type }}
+        </h6>
         <h6 :class="['button-word', {'button-on-hover': isHover}]" v-else key="q2">
           {{ buttonName }}</h6>
       </Transition>
     </div>
     <div class="button-img-frame" v-if="type==='NEXT'">
       <Transition type="transition" mode="out-in">
-        <img src="/arrow.png" alt="back" class="button-img" style="transform: rotate(180deg) translateY(-2px)"
+        <img src="/arrow.png" alt="back" class="button-img" style="transform: rotate(180deg)"
              v-if="!isHover"/>
         <img src="/studio.png" alt="back" class="button-img" v-else/>
       </Transition>
@@ -64,12 +67,11 @@ export default {
 
 .button {
   display: inline-block;
-  width: 150px;
-  height: 30px;
+  width: 9vw;
+  height: 2vw;
   position: absolute;
   margin: 0;
-  padding: 5px;
-
+  padding: 0.5vw;
   box-shadow: -3px 5px 20px rgba(0, 0, 0, .1);
   border: 3px solid;
   border-image: linear-gradient(to right top, rgba(255, 255, 255, .0) 50%, rgba(255, 255, 255, .8) 100%) 20 20;
@@ -78,19 +80,22 @@ export default {
 
 .button .button-img-frame {
   display: inline-block;
+  width: 2vw;
+  height: 2vw;
+  white-space: nowrap;
 }
 
 .button .button-img {
-  width: 25px;
-  transform: translateY(3px);
+  max-width: 100%;
+  height: auto;
 }
 
 .button .button-word-frame {
-  width: 95px;
+  width: 6vw;
   display: inline-block;
-  margin: 0 15px 0 15px;
+  margin: 0 0.5vw 0 0.5vw;
   overflow: hidden;
-  transform: translateY(2px);
+  /*transform: translateY(0.1vw);*/
   user-select: none;
 }
 
@@ -99,9 +104,8 @@ export default {
   white-space: nowrap;
   margin: 0;
   float: left;
-
   font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
-  font-size: 20px;
+  font-size: 1.5vw;
   font-weight: normal;
 
   position: relative;

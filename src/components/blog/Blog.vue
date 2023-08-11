@@ -2,21 +2,23 @@
   <div style="height: 3vh"></div>
   <div style="display: flex;">
     <div class="sidebar">
-      <div class="back">
-        <p class="title">Category</p>
-        <span v-for="item in category"
-              :style="{'background-color': this.categorySelected.indexOf(item)!==-1? '#0E619E':'#909090'}"
-              @click="changeState(item)">{{ item }}</span>
-      </div>
-      <div class="timeline">
-        <p class="title">Timeline</p>
-        <p class="nothing" v-show="articleSelected.length===0">there's nothing here, please select one or more
-          categories above</p>
-        <div v-for="item in articleSelected" class="article-profile" v-show="categorySelected.length!==0"
-             @click="onShowId = item._id" :data-height-is-short="onShowId!==item._id">
-          <p class="a-time" v-show="onShowId===item._id">{{ item.time }}</p>
-          <p class="a-title">{{ item.title }}</p>
-          <p class="a-desc" v-show="onShowId===item._id">{{ item.desc }}</p>
+      <div class="glass">
+        <div class="back">
+          <p class="title">Category</p>
+          <span v-for="item in category"
+                :style="{'background-color': this.categorySelected.indexOf(item)!==-1? '#0E619E':'#909090'}"
+                @click="changeState(item)">{{ item }}</span>
+        </div>
+        <div class="timeline">
+          <p class="title">Timeline</p>
+          <p class="nothing" v-show="articleSelected.length===0">Here's nothing, please select one or more
+            categories above.</p>
+          <div v-for="item in articleSelected" class="article-profile" v-show="categorySelected.length!==0"
+               @click="onShowId = item._id" :data-height-is-short="onShowId!==item._id">
+            <p class="a-time" v-show="onShowId===item._id">{{ item.time }}</p>
+            <p class="a-title">{{ item.title }}</p>
+            <p class="a-desc" v-show="onShowId===item._id">{{ item.desc }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -74,8 +76,8 @@ export default {
           if (e.category.indexOf(item) !== -1 && articleSelected.indexOf(e) === -1) {
             if (articleSelected.length === 0)
               articleSelected.push(e)
-            else{
-              while(insertIndex < articleSelected.length
+            else {
+              while (insertIndex < articleSelected.length
               && e._id.slice(0, 8) < articleSelected.at(insertIndex)._id.slice(0, 8))
                 ++insertIndex
               articleSelected.splice(insertIndex, 0, e)
@@ -108,7 +110,7 @@ export default {
   width: 90vw;
   margin: 3vh auto 2vh auto;
   background-color: white;
-  border-radius: 10px;
+  /*border-radius: 10px;*/
   /*box-shadow: -3px 5px 20px rgba(0, 0, 0, .1);*/
 }
 
@@ -126,11 +128,12 @@ export default {
 .sidebar {
   margin: 0 2vw 0 5vw;
   width: 20vw;
-  height: 80vh;
+  max-height: 80vh;
   background-color: white;
-  border-radius: 10px;
-  overflow-x: hidden;
+  /*border-radius: 10px;*/
+  /*overflow-x: hidden;*/
   overflow-y: scroll;
+  box-sizing: border-box;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -171,7 +174,7 @@ export default {
   padding: 5px 10px;
   border-radius: 5px;
   margin: 10px 8px 0 0;
-  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
+  /*font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;*/
   background-color: #0E619E;
   color: white;
   font-size: 15px;
@@ -263,6 +266,14 @@ export default {
   box-sizing: border-box;
   border-radius: 10px;
   background-color: white;
+}
+
+.glass {
+  box-shadow: -2px 2px 8px rgba(0, 0, 0, .3), inset -2px 2px 10px rgba(0, 0, 0, .1);
+  border: 1px solid;
+  border-image: linear-gradient(to left bottom, rgba(0, 0, 0, .1) 30%, rgba(14, 97, 158, 0) 40%, rgba(14, 97, 158, 0.8) 100%) 20 20;
+  background-image: linear-gradient(to left bottom, rgb(14, 97, 158, 0.1) 0%, rgb(255, 255, 255, 0.025) 10%, rgb(255, 255, 255, 0.05) 80%, rgba(14, 97, 158, 0.15) 100%);
+  /*text-shadow: -2px 2px 3px rgba(0, 0, 0, .15);*/
 }
 
 </style>

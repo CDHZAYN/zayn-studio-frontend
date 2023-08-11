@@ -28,7 +28,7 @@ export default {
 <style scoped>
 
 .blank1 {
-  padding-top: 50px;
+  padding-top: 30px;
 }
 
 .blank2 {

@@ -1,7 +1,7 @@
 <template>
   <span class="title">{{ title }}</span>
   <div class="main">
-    <a v-for="(item, key) in items" :href="item.src" class="item" @mouseenter="item.isHover = true"
+    <a v-for="(item, key) in items" :href="item.src" class="item glass" @mouseenter="item.isHover = true"
          @mouseleave="item.isHover = false">
       <div class="word-frame">
         <p :class="['desc', {'hover':item.isHover}]">{{ item.desc }} </p>
@@ -41,12 +41,12 @@ export default {
     }
   },
   mounted(){
-    console.log(this.title.split(' ')[0].toLowerCase()+'-sponsor/get')
+    // console.log(this.title.split(' ')[0].toLowerCase()+'-sponsor/get')
     this.$request.get(this.title.split(' ')[0].toLowerCase()+'-sponsor/get').then((res)=>{
-      console.log(res.msg)
+      // console.log(res.msg)
       this.items = res.msg
     }).catch((msg)=>{
-       console.log('connction failed!',msg)
+       // console.log('connction failed!',msg)
     })
   }
 }
@@ -69,9 +69,9 @@ export default {
   display: block;
   margin-bottom: 30px;
   color: #FFCA02;
-  font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;
+  /*font-family: Montserrat, PingFang SC, Microsoft YaHei, Arial, sans-serif;*/
   font-weight: bold;
-  font-size: 60px;
+  font-size: 45px;
   /*text-shadow: 0 3px 3px rgba(255, 202, 2, .3);*/
   text-align: center;
   user-select: none;
@@ -92,9 +92,9 @@ export default {
   margin: 10px 40px;
   width: 200px;
   height: 60px;
-  border: 3px solid;
-  border-image: linear-gradient(to right top, rgba(255, 255, 255, .0) 50%, rgba(255, 255, 255, .8) 100%) 20 20;
-  box-shadow: -3px 5px 20px rgba(0, 0, 0, .1);
+  /*border: 3px solid;*/
+  /*border-image: linear-gradient(to right top, rgba(255, 255, 255, .0) 50%, rgba(255, 255, 255, .8) 100%) 20 20;*/
+  /*box-shadow: -3px 5px 20px rgba(0, 0, 0, .1);*/
 }
 
 .main .item .avatar {
@@ -104,7 +104,7 @@ export default {
   top: 5px;
   left: -27px;
   border-radius: 50%;
-  box-shadow: -3px 5px 20px rgba(0, 0, 0, .1);
+  box-shadow: -3px 5px 5px rgba(0, 0, 0, .1);
   transition: all 0.5s ease-out;
 }
 
@@ -146,9 +146,9 @@ export default {
 }
 
 .main .item .word-frame .name {
-  bottom: 10px;
+  bottom: 5px;
   width: 150px;
-  font-size: 25px;
+  font-size: 20px;
   clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);
   text-decoration: none;
 }
@@ -169,6 +169,14 @@ export default {
 .main .item .word-frame .desc.hover {
   clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);
   animation: scroll ease-in-out 3s alternate infinite;
+}
+
+.glass {
+  box-shadow: -2px 2px 8px rgba(0, 0, 0, .3), inset -2px 2px 10px rgba(0, 0, 0, .1);
+  border: 1px solid;
+  border-image: linear-gradient(to left bottom, rgba(0, 0, 0, .1) 30%, rgba(255, 202, 2, .0) 40%, rgba(239, 239, 1, 0.8) 100%) 20 20;
+  background-image: linear-gradient(to left bottom, rgb(255, 202, 2, 0.1) 0%, rgb(255, 255, 255, 0.025) 30%, rgb(255, 255, 255, 0.05) 60%, rgba(255, 202, 2, 0.15) 100%);
+  text-shadow: -2px 2px 3px rgba(0, 0, 0, .15);
 }
 
 </style>
